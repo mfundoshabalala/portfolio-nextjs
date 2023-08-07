@@ -8,9 +8,10 @@ const Repositories = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const username = 'mfundoshabalala'; // Replace this with the desired GitHub username
-      const repos = await getRepositories(username);
-      setRepositories(repos);
+        const username = 'mfundoshabalala'; // Replace this with the desired GitHub username
+        const repos = await getRepositories(username);
+        console.log(repos[0])
+        setRepositories(repos);
     };
 
     fetchData();
@@ -19,7 +20,16 @@ const Repositories = () => {
   return (
     <ul>
       {repositories.map((repo) => (
-        <li key={repo.id}>{repo.name}</li>
+        <li key={repo.id}>
+          <strong>{repo.name}</strong>
+          <ul>
+            {Object.keys(repo.languages).map((language) => (
+              <li key={language}>
+                <strong>{language}:</strong> {repo.languages[language]}
+              </li>
+            ))}
+          </ul>
+        </li>
       ))}
     </ul>
   );

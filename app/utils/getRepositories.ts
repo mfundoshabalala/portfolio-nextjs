@@ -12,7 +12,20 @@ const getRepositories = async (username: string) => {
       username: username,
     });
 
-    return repositories.data;
+    // Create an array to store the promises for fetching languages for each repo
+    const languagePromises = repositories.data.map(async (repo: any) => {
+      const response = await octokit.request('GET /repos/{owner}/{repo}/languages', {
+        owner: username,
+        repo: repo.name,
+      });
+
+      return { ...repo, languages: response.data };
+    });
+
+    // Wait for all promises to resolve and get the final result
+    const repositoriesWithLanguages = await Promise.all(languagePromises);
+
+    return repositoriesWithLanguages;
   } catch (error) {
     if (error instanceof RequestError) {
       console.error('Error fetching repositories:', error.message);
