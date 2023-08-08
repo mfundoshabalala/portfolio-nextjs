@@ -2,7 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import getRepositories from '../utils/getRepositories';
+;
 import FlipCard from './FlipCard';
+import RepositoryCard from './RepositoryCard';
 
 const Repositories = () => {
   const [repositories, setRepositories] = useState<any[]>([]);
@@ -66,10 +68,11 @@ const Repositories = () => {
   return (
     <ul className='grid gap-4 grid-cols-3'>
       {repositories.map((repo) => (
-        <FlipCard
-          frontContent={<CardFront repo={repo} />}
-          backContent={<CardBack repo={repo} />}
-        />
+        // <FlipCard
+        //   frontContent={<CardFront repo={repo} />}
+        //   backContent={<CardBack repo={repo} />}
+        // />
+         <RepositoryCard key={repo.id} repo={repo} />
       ))}
     </ul>
   );
