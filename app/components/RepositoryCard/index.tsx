@@ -1,23 +1,21 @@
 'use client';
 
 import Repository from '@/app/lib/types';
-import { useState } from 'react';
-
+import Link from 'next/link';
+import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface RepositoryCardProps {
   repo: Repository;
 }
 
 const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleCardClick = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+    const href = pathname + '?repo=' + repo.id;
+    router.push(href);
+  }
 
   return (
     <div className="repository-card" onClick={handleCardClick}>
@@ -28,34 +26,10 @@ const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo }) => {
         <p>Stars: {repo.stargazers_count}</p>
         <p>Forks: {repo.forks_count}</p>
         <p>Last Updated: {new Date(repo.updated_at).toLocaleDateString()}</p>
-        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+        <Link href={repo.html_url} target="_blank" rel="noopener noreferrer">
           View on GitHub
-        </a>
+        </Link>
       </div>
-
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>{repo.name}</h2>
-            <p>Description: {repo.description || 'No description available.'}</p>
-            <p>Language: {repo.language}</p>
-            <p>Stars: {repo.stargazers_count}</p>
-            <p>Forks: {repo.forks_count}</p>
-            <p>Last Updated: {new Date(repo.updated_at).toLocaleDateString()}</p>
-            <p>Technologies and Tools: {/* Add technologies and tools used */}</p>
-            <p>Contributing Guidelines: {/* Add contributing guidelines */}</p>
-            {repo.homepage && (
-              <p>
-                <a href={repo.homepage} target="_blank" rel="noopener noreferrer">
-                  Live Demo
-                </a>
-              </p>
-            )}
-            <p>Contact: {/* Add contact information */}</p>
-            <button onClick={handleCloseModal}>Close</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
