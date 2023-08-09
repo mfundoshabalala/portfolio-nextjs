@@ -19,7 +19,7 @@ const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo }) => {
   }
 
   return (
-    <div className="p-4 md:w-1/3 hover:cursor-pointer" onClick={handleCardClick}>
+    <div className="p-4 w-full hover:cursor-pointer" onClick={handleCardClick}>
         <div className="h-full overflow-hidden border-2 border-gray-200 rounded-lg border-opacity-60">
             {/* <Image className="object-cover object-center w-full lg:h-48 md:h-36" src="https://dummyimage.com/721x401" alt="blog"> */}
             <div className="p-6">
