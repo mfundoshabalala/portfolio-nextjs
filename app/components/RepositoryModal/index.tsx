@@ -1,15 +1,25 @@
 'use client';
 
 import Link from 'next/link'
-import { useRouter } from 'next/router';
+import { FC, ReactNode } from 'react';
 
-const RepositoryModal = () => {
-	const router = useRouter()
+interface RepositoryModalProps {
+	children?: ReactNode,
+	closeModal?: any
+}
+
+const RepositoryModal: FC<RepositoryModalProps> = ({ children, closeModal}) => {
 	return (
-		<div className="modal">
-			<h1>Modal Title</h1>
-			<p>Modal Body</p>
-			<button onClick={router.back}>Ok</button>
+		<div className="overlay">
+			<div className="modal">
+				<h1>Modal Title</h1>
+				<p>Modal Body</p>
+				{children}
+				<Link
+					scroll={false}
+					href={closeModal}>
+				Close</Link>
+			</div>
 		</div>
 	)
 }

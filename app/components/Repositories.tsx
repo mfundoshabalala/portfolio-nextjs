@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import getRepositories from '../utils/getRepositories';
 import RepositoryCard from './RepositoryCard';
-import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
+import RepositoryModal from './RepositoryModal';
 
-const Repositories = () => {
+const   Repositories = () => {
   const [repositories, setRepositories] = useState<any[]>([]);
 
 
@@ -23,10 +23,15 @@ const Repositories = () => {
 
   const searchParams = useSearchParams();
   const showModal = searchParams.has('repo');
+  console.log(showModal);
+
+  const closeModal = () =>{
+    return '/';
+  }
 
   return (
     <section>
-      {showModal && <h1>Hello World</h1>}
+      {showModal && <RepositoryModal closeModal={'/'} />}
       <ul className='grid grid-cols-3 gap-4'>
         {repositories.map((repo) => (
           <RepositoryCard key={repo.id} repo={repo} />

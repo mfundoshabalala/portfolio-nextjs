@@ -45,9 +45,7 @@ interface Repository {
   keys_url: string;
   labels_url: string;
   language: string;
-  languages: {
-    [key: string]: number;
-  };
+  languages?: any;
   languages_url: string;
   license: {
     key: string;

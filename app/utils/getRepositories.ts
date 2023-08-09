@@ -1,6 +1,7 @@
 // utils/getRepositories.ts
 
 import { Octokit, RequestError } from 'octokit';
+import Repository from '../lib/types';
 
 const getRepositories = async (username: string) => {
   const octokit = new Octokit({
@@ -13,7 +14,7 @@ const getRepositories = async (username: string) => {
     });
 
     // Create an array to store the promises for fetching languages for each repo
-    const languagePromises = repositories.data.map(async (repo: any) => {
+    const languagePromises = repositories.data.map(async(repo: Repository) => {
       const response = await octokit.request('GET /repos/{owner}/{repo}/languages', {
         owner: username,
         repo: repo.name,
