@@ -14,12 +14,11 @@ const getRepositories = async (username: string) => {
     });
 
     // Create an array to store the promises for fetching languages for each repo
-    const languagePromises = repositories.data.map(async(repo: Repository) => {
+    const languagePromises = repositories.data.map(async(repo:any) => {
       const response = await octokit.request('GET /repos/{owner}/{repo}/languages', {
         owner: username,
         repo: repo.name,
       });
-
       return { ...repo, languages: response.data };
     });
 

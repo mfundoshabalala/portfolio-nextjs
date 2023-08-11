@@ -1,70 +1,50 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import useModal from '@/app/utils/hooks/useModal';
+import Image from 'next/image';
 import { FC, ReactNode } from 'react';
 
 interface RepoModalProps {
-	children?: ReactNode;
+  children?: ReactNode;
 }
 
 const RepositoryModal: FC<RepoModalProps> = (props) => {
-	const { children } = props;
-	const router = useRouter();
+  const { children } = props;
+  const { dialogRef, closeModal } = useModal({ name: 'repo' });
 
-	return (
-		<div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-			<div
-	className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
->
-	<div className="mt-3 text-center">
-		<div
-			className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100"
-		>
-			<svg
-				className="h-6 w-6 text-green-600"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M5 13l4 4L19 7"
-				></path>
-			</svg>
-		</div>
-		<h3 className="text-lg leading-6 font-medium text-gray-900">Successful!</h3>
-		<div className="mt-2 px-7 py-3">
-			<p className="text-sm text-gray-500">
-				Account has been successfully registered!
-			</p>
-		</div>
-		<div className="items-center px-4 py-3">
-			<Link scroll={false} onClick={router.back} href=''>
-				Close
-			</Link>
-			<button
-				id="ok-btn"
-				className="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
-			>
-				OK
-			</button>
-		</div>
-	</div>
-</div>
-		</div>
-	);
+  const ModalHeader = () => {
+    return <header>Header</header>;
+  };
+
+  const ModalFooter = () => {
+    return <footer>Footer</footer>;
+  };
+
+  const ModalBody = () => {
+    return <main>{children}</main>;
+  };
+
+  const ModalAside = ({ src }: { src: string }) => {
+    return <Image src={src} width='745' height='265' alt='Repo Image' />;
+  };
+
+  return (
+    <dialog ref={dialogRef} className='w-full max-w-2xl'>
+      <section className='container'>
+        <ModalAside src='https://dummyimage.com/600x400' />
+        <ModalHeader></ModalHeader>
+        <ModalBody></ModalBody>
+        <ModalFooter></ModalFooter>
+      </section>
+      <button
+        onClick={closeModal}
+        autoFocus
+        className='text- inline-flex rounded border-0 bg-indigo-500 px-3 py-1 text-white hover:bg-indigo-600 focus:outline-none'
+      >
+        Close
+      </button>
+    </dialog>
+  );
 };
-			// <div className='modal'>
-			// 	<h1>Modal Title</h1>
-			// 	<p>Modal Body</p>
-			// 	{children}
-			// 	<Link scroll={false} onClick={router.back} href=''>
-			// 		Close
-			// 	</Link>
-			// </div>
 
 export default RepositoryModal;
